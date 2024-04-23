@@ -1,0 +1,30 @@
+clear
+n = 10^6  
+rand('state', 100);
+rand('state', 200); 
+
+ip = rand(1,n)>0.5
+probability s = 2*ip-1
+n = 1/sqrt(2)*randn(1,n) + j*randn(1,n);
+eb_no_db = [-3:10]; 
+for ii = 1:length(eb_no_db)
+
+y= s + 10^(eb_no_db(ii)/20)*n; 
+iphat = real(y)>0; 
+
+nerr(ii) = size(find([ip - iphat]),2); 
+end 
+simber = nerr/n
+theoryber = 0.5* erfc(sqrt(10^(eb_no_db/10))); 
+
+%plot
+close all
+figure
+sesmilogy(eb_no_db, theoryber, 'b-'); hold on
+semilogy(eb-no-db, simber, 'mx-'); 
+axis([-3 10 10^-50.5])
+grid on
+legend('theory', 'simulation'); 
+xlabel('eb/no, db'); 
+ylabel('bit error rate'); 
+title('Bit Error probability curve for BPSK modulation');
